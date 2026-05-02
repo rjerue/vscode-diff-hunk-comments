@@ -1,0 +1,123 @@
+{
+  "name": "vscode-diff-hunk-comments",
+  "displayName": "Diff Hunk Comments",
+  "description": "Adds agent-ready comment actions to VS Code diff hunks.",
+  "version": "0.0.1",
+  "publisher": "local",
+  "packageManager": "pnpm@7.16.1",
+  "license": "MIT",
+  "icon": "resources/icon.png",
+  "keywords": [
+    "diff",
+    "comments",
+    "agent",
+    "review",
+    "codelens"
+  ],
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "SCM Providers",
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished",
+    "onCommand:diffHunkComments.commentHunk",
+    "onCommand:diffHunkComments.copyActiveSelection"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "diffHunkComments.commentHunk",
+        "title": "Diff Hunk Comments: Comment on Hunk",
+        "icon": "$(comment)"
+      },
+      {
+        "command": "diffHunkComments.commentActiveHunk",
+        "title": "Diff Hunk Comments: Comment on Current Hunk",
+        "icon": "$(comment-discussion)"
+      },
+      {
+        "command": "diffHunkComments.copyActiveSelection",
+        "title": "Diff Hunk Comments: Copy Active Selection for Agent",
+        "icon": "$(copy)"
+      },
+      {
+        "command": "diffHunkComments.refresh",
+        "title": "Diff Hunk Comments: Refresh Hunk Actions",
+        "icon": "$(refresh)"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "diffHunkComments.commentActiveHunk",
+          "when": "resourceScheme == file",
+          "group": "navigation@49"
+        },
+        {
+          "command": "diffHunkComments.copyActiveSelection",
+          "when": "resourceScheme == file",
+          "group": "navigation@50"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "diffHunkComments.commentActiveHunk",
+          "when": "resourceScheme == file",
+          "group": "navigation"
+        },
+        {
+          "command": "diffHunkComments.refresh",
+          "group": "navigation"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Diff Hunk Comments",
+      "properties": {
+        "diffHunkComments.promptForComment": {
+          "type": "boolean",
+          "default": true,
+          "description": "Prompt for comment text before copying the agent-ready diff payload."
+        },
+        "diffHunkComments.agentCommand": {
+          "type": "string",
+          "default": "",
+          "description": "Optional VS Code command id to receive the generated payload. If empty or the command fails, the payload is copied to the clipboard."
+        },
+        "diffHunkComments.showOnAllDiffs": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show hunk comment actions in every VS Code text diff. Disable this to only show actions for diff titles containing '(Working Tree)'."
+        }
+      }
+    },
+    "configurationDefaults": {
+      "diffEditor.codeLens": true,
+      "editor.codeLens": true
+    }
+  },
+  "scripts": {
+    "check": "tsc -p ./ --noEmit",
+    "compile": "pnpm run check && pnpm run bundle",
+    "bundle": "esbuild src/extension.ts --bundle --platform=node --format=cjs --external:vscode --sourcemap --outfile=out/extension.js",
+    "watch": "esbuild src/extension.ts --bundle --platform=node --format=cjs --external:vscode --sourcemap --outfile=out/extension.js --watch",
+    "vscode:prepublish": "pnpm run compile",
+    "package": "pnpm run package:vsix",
+    "package:vsix": "vsce package --no-dependencies",
+    "publish:marketplace": "vsce publish --no-dependencies"
+  },
+  "dependencies": {
+    "diff": "^8.0.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.32",
+    "@types/vscode": "1.90.0",
+    "@vscode/vsce": "^3.9.1",
+    "esbuild": "^0.28.0",
+    "typescript": "^5.8.3"
+  }
+}
