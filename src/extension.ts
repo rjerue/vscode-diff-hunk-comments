@@ -164,7 +164,10 @@ async function copyActiveSelection() {
 
   const filePath = getDisplayPath(editor.document.uri);
   const start = editor.selection.start.line + 1;
-  const end = editor.selection.end.line + 1;
+  const endLine = editor.selection.end.character === 0
+    ? Math.max(editor.selection.start.line, editor.selection.end.line - 1)
+    : editor.selection.end.line;
+  const end = endLine + 1;
   const comment = await vscode.window.showInputBox({
     title: 'Comment for agent',
     prompt: 'Optional feedback to include with this selected range',

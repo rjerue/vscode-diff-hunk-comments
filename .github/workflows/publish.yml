@@ -1,0 +1,38 @@
+name: Publish
+
+on:
+  workflow_dispatch:
+    inputs:
+      pre_release:
+        description: Publish as a pre-release
+        type: boolean
+        default: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 7.16.1
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Publish to Visual Studio Marketplace
+        env:
+          VSCE_PAT: ${{ secrets.VSCE_PAT }}
+          PRE_RELEASE: ${{ inputs.pre_release }}
+        run: |
+          if [ "$PRE_RELEASE" = "true" ]; then
+            pnpm exec vsce publish --no-dependencies --no-rewrite-relative-links --pre-release -p "$VSCE_PAT"
+          else
+            pnpm exec vsce publish --no-dependencies --no-rewrite-relative-links -p "$VSCE_PAT"
+          fi

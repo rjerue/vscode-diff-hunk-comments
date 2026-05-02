@@ -34,7 +34,7 @@ Open this folder in VS Code, press `F5`, and open any diff. For `vscode-git-tree
 
 ## Publishing
 
-Before publishing, replace the `publisher` value in `package.json` with your Visual Studio Marketplace publisher ID and add a public `repository` URL if available.
+Before publishing, replace the `publisher` value in `package.json` with your Visual Studio Marketplace publisher ID and add a public `repository` URL if available. A repository URL is recommended so `vsce` can rewrite README image links for the Marketplace listing.
 
 To publish locally:
 
