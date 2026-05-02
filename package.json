@@ -6,6 +6,10 @@
   "publisher": "local",
   "packageManager": "pnpm@10.33.2",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rjerue/vscode-diff-hunk-comments.git"
+  },
   "icon": "resources/icon.png",
   "keywords": [
     "diff",
@@ -107,8 +111,7 @@
     "watch": "esbuild src/extension.ts --bundle --platform=node --format=cjs --external:vscode --sourcemap --outfile=out/extension.js --watch",
     "vscode:prepublish": "pnpm run compile",
     "package": "pnpm run package:vsix",
-    "package:vsix": "vsce package --no-dependencies --no-rewrite-relative-links",
-    "publish:marketplace": "vsce publish --no-dependencies --no-rewrite-relative-links"
+    "package:vsix": "vsce package --no-dependencies --no-rewrite-relative-links"
   },
   "dependencies": {
     "diff": "^8.0.2"

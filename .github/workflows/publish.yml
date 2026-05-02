@@ -32,7 +32,7 @@ jobs:
           PRE_RELEASE: ${{ inputs.pre_release }}
         run: |
           if [ "$PRE_RELEASE" = "true" ]; then
-            pnpm exec vsce publish --no-dependencies --no-rewrite-relative-links --pre-release -p "$VSCE_PAT"
+            pnpm exec vsce publish --no-dependencies --pre-release -p "$VSCE_PAT"
           else
-            pnpm exec vsce publish --no-dependencies --no-rewrite-relative-links -p "$VSCE_PAT"
+            pnpm exec vsce publish --no-dependencies -p "$VSCE_PAT"
           fi
