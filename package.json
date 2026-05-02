@@ -2,7 +2,7 @@
   "name": "vscode-diff-hunk-comments",
   "displayName": "Diff Hunk Comments",
   "description": "Adds agent-ready comment actions to VS Code diff hunks.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "publisher": "RyanJerue",
   "packageManager": "pnpm@10.33.2",
   "license": "MIT",
